@@ -1,0 +1,16 @@
+{
+  "positive": [
+    "Hi, this is Alice Johnson. I'm applying for a $320,000 loan. I work at GlobalTech and make $95,000 annually. My co-applicant is Steve Johnson.",
+    "Hello, I’m David. I’m seeking a $450,000 mortgage. I’m with BioMed Inc and my income is $120,000. My spouse, Sarah, will co-sign.",
+    "Hi, I'm Jennifer Smith. I'm looking for a home loan of $275,000. My job is with HealthPlus, and I earn $87,000 a year. No co-borrower.",
+    "Yes, my name is Kevin Liu. I need a $390,000 mortgage. I’m employed at NextGen Corp. Annual income: $100,000. Co-borrower: Megan Liu.",
+    "I’m Angela Patel. Mortgage requested: $310,000. I work for EduWorks and make $82,500 yearly. My brother, Ravi, is my co-borrower."
+  ],
+  "negative": [
+    "Yeah so we were thinking about getting a house, maybe around 300K or so, not totally sure. I work in sales. My wife handles the money stuff.",
+    "Umm... my name’s Josh I guess. I dunno what loan I qualify for. I freelance and income varies. Maybe my partner will apply with me too.",
+    "Hey, just checking if I can get a mortgage. I think I need something big like 500K? I don’t have a job yet but expecting a new one soon.",
+    "So my cousin and I wanna try for a home loan. No idea how much, probably depends. I do part-time gigs, income isn’t fixed.",
+    "Hi, I’m Diana. I’m not sure how much mortgage I’m eligible for. I’m self-employed. Didn’t calculate income yet. No co-borrower."
+  ]
+}
