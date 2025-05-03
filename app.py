@@ -10,7 +10,7 @@ openai.api_key = st.secrets["OPENAI_API_KEY"]
 # -------------------------------
 # 🔐 API Setup
 # -------------------------------
-openai.api_key = OPENAI_API_KEY  # Or use: st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]  # ✅ Directly access Streamlit secret
 
 # -------------------------------
 # 🤖 LLM Extractor Logic
