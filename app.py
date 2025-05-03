@@ -2,7 +2,10 @@ import streamlit as st
 import pandas as pd
 import json
 import openai
-from config import OPENAI_API_KEY  # OR use st.secrets["OPENAI_API_KEY"] on Streamlit Cloud
+import streamlit as st
+import openai
+
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # -------------------------------
 # 🔐 API Setup
