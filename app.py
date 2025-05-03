@@ -2,15 +2,11 @@ import streamlit as st
 import pandas as pd
 import json
 import openai
-import streamlit as st
-import openai
-
-openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # -------------------------------
 # 🔐 API Setup
 # -------------------------------
-openai.api_key = st.secrets["OPENAI_API_KEY"]  # ✅ Directly access Streamlit secret
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # -------------------------------
 # 🤖 LLM Extractor Logic
