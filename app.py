@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
 import json
-import openai
+from openai import OpenAI
 
 # -------------------------------
 # 🔐 API Setup
 # -------------------------------
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # -------------------------------
 # 🤖 LLM Extractor Logic
@@ -42,7 +42,7 @@ For each field, return:
 
     user_prompt = f"""Transcript:\n\"\"\"{transcript}\"\"\"\n\nExtract the fields as per instructions above. Do not return anything else."""
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4-turbo",
         messages=[
             {"role": "system", "content": system_prompt},
@@ -52,9 +52,10 @@ For each field, return:
     )
 
     try:
-        raw = response["choices"][0]["message"]["content"]
+        raw = response.choices[0].message.content
         return json.loads(raw)
-    except:
+    except Exception as e:
+        st.error(f"⚠️ Parsing failed: {e}")
         return []
 
 # -------------------------------
@@ -143,25 +144,22 @@ with col1:
             st.warning("Please enter a transcript or upload a file.")
         else:
             with st.spinner("Extracting fields..."):
-                try:
-                    result = extract_fields_from_transcript(st.session_state["transcript"])
-                    if not result:
-                        st.warning("Empty or invalid result. Try a better transcript.")
-                    else:
-                        df = pd.DataFrame(result)
+                result = extract_fields_from_transcript(st.session_state["transcript"])
+                if not result:
+                    st.warning("Empty or invalid result. Try a better transcript.")
+                else:
+                    df = pd.DataFrame(result)
 
-                        def color_conf(val):
-                            if val >= 0.9:
-                                return "background-color: #d0f0c0;"
-                            elif val >= 0.7:
-                                return "background-color: #fff8b3;"
-                            else:
-                                return "background-color: #f8d7da;"
+                    def color_conf(val):
+                        if val >= 0.9:
+                            return "background-color: #d0f0c0;"
+                        elif val >= 0.7:
+                            return "background-color: #fff8b3;"
+                        else:
+                            return "background-color: #f8d7da;"
 
-                        st.subheader("🧾 Extracted Fields")
-                        st.dataframe(df.style.applymap(color_conf, subset=["confidence_score"]))
+                    st.subheader("🧾 Extracted Fields")
+                    st.dataframe(df.style.applymap(color_conf, subset=["confidence_score"]))
 
-                        csv = df.to_csv(index=False).encode("utf-8")
-                        st.download_button("📥 Download CSV", csv, "extracted_fields.csv", "text/csv")
-                except Exception as e:
-                    st.error(f"Error: {e}")
+                    csv = df.to_csv(index=False).encode("utf-8")
+                    st.download_button("📥 Download CSV", csv, "extracted_fields.csv", "text/csv")
