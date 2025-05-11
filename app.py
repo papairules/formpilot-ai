@@ -14,15 +14,21 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 def extract_fields_from_transcript(transcript):
     system_prompt = """
 You are an expert mortgage assistant.
-Your job is to extract standardized 1003 mortgage application form fields from transcripts.
+
+Your task is to extract standardized 1003 mortgage application form fields from the raw transcript text provided.
+
+Extract the fields EXACTLY as they appear in the transcript.
+- Do not fix typos, spelling errors, special characters, or formatting issues.
+- Do not infer or replace malformed names, numbers, or addresses.
+- Your job is to return raw spoken values as-is, even if they are incomplete or irregular.
 
 For each field, return:
 - field_name (string)
-- field_value (string)
+- field_value (string, as-is from transcript)
 - confidence_score (float from 0 to 1)
-- short_explanation (max 20 words explaining how you found it)
+- short_explanation (max 20 words on how you found it)
 
-⚠️ Return ONLY a valid JSON array like this:
+Return ONLY a valid JSON array like this:
 
 [
   {
@@ -37,7 +43,7 @@ For each field, return:
     "confidence_score": 0.90,
     "short_explanation": "Said 'I'd like to borrow around $400,000'."
   }
-]
+  ]
     """
 
     user_prompt = f"""Transcript:\n\"\"\"{transcript}\"\"\"\n\nExtract the fields as per instructions above. Do not return anything else."""
